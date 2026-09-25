@@ -8,7 +8,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/GITHUB_USERNAME/REPOSITORY_NAME.git
+    repoURL: https://github.com/vmdeguzman/argocd.git
     targetRevision: main
     path: gitops
 

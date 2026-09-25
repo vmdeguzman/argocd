@@ -16,8 +16,7 @@ spec:
 
     spec:
       nodeSelector:
-	kubernetes.io/hostname: ocp-worker1
-        #workload: application
+        kubernetes.io/hostname: ocp-worker1
 
       containers:
         - name: mysql

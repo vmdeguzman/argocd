@@ -20,7 +20,7 @@ spec:
 
       containers:
         - name: tmg-crud
-	  image: image-registry.openshift-image-registry.svc:5000/gitops-cicd/tmg-crud:1.1
+          image: image-registry.openshift-image-registry.svc:5000/gitops-cicd/tmg-crud:1.1
           #image: image-registry.openshift-image-registry.svc:5000/gitops-cicd/tmg-crud:1.0
 
           ports:

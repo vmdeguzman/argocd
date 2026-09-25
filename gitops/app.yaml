@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tmg-crud
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: tmg-crud
+
+  template:
+    metadata:
+      labels:
+        app: tmg-crud
+
+    spec:
+      nodeSelector:
+        workload: application
+
+      containers:
+        - name: tmg-crud
+          image: image-registry.openshift-image-registry.svc:5000/gitops-cicd/tmg-crud:1.0
+
+          ports:
+            - containerPort: 8080
+
+          env:
+            - name: DB_HOST
+              value: mysql
+
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: username
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: database
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tmg-crud
+spec:
+  selector:
+    app: tmg-crud
+
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080

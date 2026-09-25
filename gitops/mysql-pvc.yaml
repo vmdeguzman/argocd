@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hostpath-csi-all
+  resources:
+    requests:
+      storage: 2Gi
